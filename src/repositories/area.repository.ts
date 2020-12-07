@@ -1,19 +1,19 @@
-import {DefaultCrudRepository, repository, HasManyRepositoryFactory} from '@loopback/repository';
-import {Area, AreaRelations, Course} from '../models';
+import {Getter, inject} from '@loopback/core';
+import {DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
 import {MongodbDataSource} from '../datasources';
-import {inject, Getter} from '@loopback/core';
+import {Area, AreaRelations, Course} from '../models';
 import {CourseRepository} from './course.repository';
 
 export class AreaRepository extends DefaultCrudRepository<
   Area,
   typeof Area.prototype.id,
   AreaRelations
-> {
+  > {
 
   public readonly courses: HasManyRepositoryFactory<Course, typeof Area.prototype.id>;
 
   constructor(
-    @inject('datasources.mongodb') dataSource: MongodbDataSource, @repository.getter('CourseRepository') protected courseRepositoryGetter: Getter<CourseRepository>,
+    @inject('datasources.mongodb') dataSource: MongodbDataSource, @repository.getter('CourseRepository') protected courseRepositoryGetter: Getter<CourseRepository>
   ) {
     super(Area, dataSource);
     this.courses = this.createHasManyRepositoryFactoryFor('courses', courseRepositoryGetter,);

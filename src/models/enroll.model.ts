@@ -1,4 +1,7 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasOne} from '@loopback/repository';
+import {Course} from './course.model';
+import {Student} from './student.model';
+import {Certificate} from './certificate.model';
 
 @model()
 export class Enroll extends Entity {
@@ -27,6 +30,14 @@ export class Enroll extends Entity {
   })
   approbedSections?: number;
 
+  @belongsTo(() => Course)
+  courseId: string;
+
+  @belongsTo(() => Student)
+  studentId: string;
+
+  @hasOne(() => Certificate)
+  certificate: Certificate;
 
   constructor(data?: Partial<Enroll>) {
     super(data);

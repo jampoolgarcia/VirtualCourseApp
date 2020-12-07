@@ -1,6 +1,7 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
-import {Faculty} from './faculty.model';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {Area} from './area.model';
+import {Enroll} from './enroll.model';
+import {Faculty} from './faculty.model';
 import {Section} from './section.model';
 
 @model()
@@ -55,6 +56,10 @@ export class Course extends Entity {
 
   @hasMany(() => Section)
   sections: Section[];
+
+  @hasMany(() => Enroll)
+  enrolls: Enroll[];
+
 
   constructor(data?: Partial<Course>) {
     super(data);

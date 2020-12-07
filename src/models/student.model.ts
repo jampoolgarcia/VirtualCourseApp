@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasMany, hasOne, model, property} from '@loopback/repository';
+import {Enroll} from './enroll.model';
+import {User} from './user.model';
 
 @model()
 export class Student extends Entity {
@@ -50,6 +52,12 @@ export class Student extends Entity {
     required: true,
   })
   career: string;
+
+  @hasOne(() => User)
+  user: User;
+
+  @hasMany(() => Enroll)
+  enrolls: Enroll[];
 
 
   constructor(data?: Partial<Student>) {

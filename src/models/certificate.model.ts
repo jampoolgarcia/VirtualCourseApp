@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {Enroll} from './enroll.model';
 
 @model()
 export class Certificate extends Entity {
@@ -33,6 +34,8 @@ export class Certificate extends Entity {
   })
   signature: string;
 
+  @belongsTo(() => Enroll)
+  enrollId: string;
 
   constructor(data?: Partial<Certificate>) {
     super(data);
