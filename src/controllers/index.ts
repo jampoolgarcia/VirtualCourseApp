@@ -18,3 +18,4 @@ export * from './student.controller';
 export * from './user-student.controller';
 export * from './certificate-enroll.controller';
 export * from './enroll-certificate.controller';
+export * from './user.controller';
