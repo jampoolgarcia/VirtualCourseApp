@@ -1,20 +1,17 @@
-import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
-import {Certificate, CertificateRelations, Student, Course, Enroll} from '../models';
+import {Getter, inject} from '@loopback/core';
+import {BelongsToAccessor, DefaultCrudRepository, repository} from '@loopback/repository';
 import {MongodbDataSource} from '../datasources';
-import {inject, Getter} from '@loopback/core';
-import {StudentRepository} from './student.repository';
+import {Certificate, CertificateRelations, Enroll} from '../models';
 import {CourseRepository} from './course.repository';
 import {EnrollRepository} from './enroll.repository';
+import {StudentRepository} from './student.repository';
 
 export class CertificateRepository extends DefaultCrudRepository<
   Certificate,
   typeof Certificate.prototype.id,
   CertificateRelations
-> {
+  > {
 
-  public readonly student: BelongsToAccessor<Student, typeof Certificate.prototype.id>;
-
-  public readonly course: BelongsToAccessor<Course, typeof Certificate.prototype.id>;
 
   public readonly enroll: BelongsToAccessor<Enroll, typeof Certificate.prototype.id>;
 
@@ -24,9 +21,6 @@ export class CertificateRepository extends DefaultCrudRepository<
     super(Certificate, dataSource);
     this.enroll = this.createBelongsToAccessorFor('enroll', enrollRepositoryGetter,);
     this.registerInclusionResolver('enroll', this.enroll.inclusionResolver);
-    this.course = this.createBelongsToAccessorFor('course', courseRepositoryGetter,);
-    this.registerInclusionResolver('course', this.course.inclusionResolver);
-    this.student = this.createBelongsToAccessorFor('student', studentRepositoryGetter,);
-    this.registerInclusionResolver('student', this.student.inclusionResolver);
+
   }
 }
